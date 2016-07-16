@@ -5,12 +5,7 @@ var express = require('express'),
     app = express();
 
 // Params sent from webhook
-var lastEvent = {
-  event: null,
-  data: null,
-  'published_at': null,
-  coreid: null
-};
+var lastEvent;
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -24,7 +19,7 @@ app.set('view engine', 'handlebars');
 
 app.use('/api', (req, res) => {
   console.log('received', req.body);
-  lastEvent = JSON.parse(req.body);
+  lastEvent = req.body;
   res.status(200).send(JSON.stringify(req.body));
 });
 
