@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en">
   <body>
-    <h1>Current Accel: {{accel}}</h1>
-    <h1>Current Dial: {{dial}}</h1>
+    <h1>Latest Event</h1>
+    <p>Type: {{lastEvent.event}}</p>
+    <p>Data: {{lastEvent.data}}</p>
+    <p>Time: {{lastEvent['published_at']}}</p>
+    <p>Device: {{lastEvent.coreid}}</p>
   </body>
 </html>

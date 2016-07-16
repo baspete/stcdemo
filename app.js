@@ -4,8 +4,13 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     app = express();
 
-var accel = {x:0,y:0,z:0};
-var dial = {v:0};
+// Params sent from webhook
+var lastEvent = {
+  event: null,
+  data: null,
+  'published_at': null,
+  coreid: null
+};
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -17,23 +22,16 @@ app.engine('handlebars', handlebars({
 }));
 app.set('view engine', 'handlebars');
 
-app.use('/api/dial', (req, res) => {
-  console.log('dial received', req.body);
-  dial = req.body;
-  res.status(200).send(JSON.stringify(req.body));
-});
-
-app.use('/api/accel', (req, res) => {
-  console.log('accel received', req.body);
-  accel = req.body;
+app.use('/api', (req, res) => {
+  console.log('received', req.body);
+  lastEvent = req.body;
   res.status(200).send(JSON.stringify(req.body));
 });
 
 app.get('/', (req,res) => {
   res.render('main', {
     helpers: {
-      accel: JSON.stringify(accel),
-      dial: JSON.stringify(dial)
+      lastEvent: JSON.stringify(lastEvent)
     }
   });
 });
