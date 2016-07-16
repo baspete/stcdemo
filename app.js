@@ -24,7 +24,7 @@ app.set('view engine', 'handlebars');
 
 app.use('/api', (req, res) => {
   console.log('received', req.body);
-  lastEvent = req.body;
+  lastEvent = JSON.parse(req.body);
   res.status(200).send(JSON.stringify(req.body));
 });
 
